@@ -1,4 +1,4 @@
-package ghost.chess.frontend.gui;
+package ghost.ognotepad.frontend.gui;
 
 import javafx.scene.Scene;
 import javafx.scene.text.Text;
@@ -28,7 +28,7 @@ public class GUI {
     }
 
     public void createWindow() {
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("OGNotepad");
 
         final GridPane grid = createGrid();
 

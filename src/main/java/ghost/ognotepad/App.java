@@ -1,6 +1,6 @@
-package ghost.chess;
+package ghost.ognotepad;
 
-import ghost.chess.frontend.gui.GUI;
+import ghost.ognotepad.frontend.gui.GUI;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

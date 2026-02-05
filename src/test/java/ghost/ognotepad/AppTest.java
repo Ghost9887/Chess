@@ -1,4 +1,4 @@
-package ghost.chess;
+package ghost.ognotepad;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
