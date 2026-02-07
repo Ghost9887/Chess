@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -38,12 +39,10 @@ import ghost.ognotepad.backend.*;
 
 //TODO: FEATURES TO ADD 
 /*
- *  Fix it so it starts in the middle
  *  Implement Find
  *  Open new Window 
  *  Settings page (Fonts, DarkMode, LightMode, Default Width, Default Height, Default font size)
  *  Dark/light mode switcher
- *  Fullscreen (doesn't work)
  *  Config file to store settings
  *  Print File
  *  New Files open in a new Tab maybe????
@@ -52,8 +51,8 @@ import ghost.ognotepad.backend.*;
 public class GUI {
 
     private final Stage primaryStage;
-    private int defaultWidth = 1000;
-    private int defaultHeight = 800;
+    private int defaultWidth = 800;
+    private int defaultHeight = 600;
     private int row = 0;
     private int column = 0;
     private int count = 0;
@@ -249,7 +248,6 @@ public class GUI {
         return box;
     }
 
-
     //ACTIONS
     private void updateBottomBar(ObservableValue<? extends Number> obs, Number oldPos, Number newPos) {
         int caret = newPos.intValue();
@@ -389,6 +387,14 @@ public class GUI {
     }
 
     private void find() {
+        TextInputDialog td = new TextInputDialog("Find");
+        td.setHeaderText("find word: ");
+        Optional<String> res = td.showAndWait();
 
+        if (res.isPresent()) {
+            if (area.getText().contains(res.get())) {
+                //implement
+            }
+        }
     }
 }
