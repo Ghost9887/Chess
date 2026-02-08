@@ -12,7 +12,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -28,6 +31,7 @@ import javafx.geometry.Orientation;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser;
 import javafx.beans.value.ObservableValue;
+import javafx.beans.value.ChangeListener;
 
 import java.io.File;
 import java.util.Optional;
@@ -38,36 +42,22 @@ import java.util.regex.Matcher;
 
 import ghost.ognotepad.backend.*;
 
-
-//TODO: FEATURES TO ADD 
-/*
- *  Settings page (Fonts, DarkMode, LightMode, Default Width, Default Height, Default font size)
- *  Dark/light mode switcher
- *  Config file to store settings
- *  Print File
- *  New Files open in a new Tab maybe????
- *  when deleting with control the count doesnt get updated 
- */
-
 public class GUI {
 
     private final int MIN_FONT_SIZE = 1;
     private final int MAX_FONT_SIZE = 150;
     private final Stage primaryStage;
-    private int defaultWidth = 800;
-    private int defaultHeight = 600;
-    private int settingsDefaultWidth = 500;
-    private int settingsDefaultHeight = 350;
+    private int width = 800;
+    private int height = 600;
     private int row = 1;
     private int column = 0;
     private int count = 0;
-    private int defaultFontSize = 12;
-    private int fontSize = defaultFontSize;
-    private TextArea area = createTextArea();
+    private int fontSize = 12;
+    private TextArea area;
     private Label rowLabel = new Label("Row: 1");
     private Label columnLabel = new Label("Column: 0");
     private Label countLabel = new Label("Count: 0");
-    private Label fontSizeLabel = new Label("Font Size: 12");
+    private Label fontSizeLabel = new Label("");
     private Label breakLabel = new Label("'break'");
     private Label fileLabel = new Label("");
     private String originalContent = "";
@@ -77,6 +67,7 @@ public class GUI {
     }
 
     public void createWindow() {
+        fontSizeLabel.setText("Font: " + String.valueOf(fontSize));
         primaryStage.setTitle("OGNotepad");
 
         VBox root = new VBox();
@@ -86,10 +77,11 @@ public class GUI {
 
         VBox topBar = createTopBar();
         HBox bottomBar = createBottomBar();
+        area = createTextArea();
         VBox.setVgrow(area, Priority.ALWAYS);
         root.getChildren().addAll(topBar, fileLabel, area, bottomBar);
 
-        Scene scene = new Scene(root, defaultWidth, defaultHeight);
+        Scene scene = new Scene(root, width, height);
         scene.addEventFilter(ScrollEvent.SCROLL, event -> {
             if (event.isControlDown()) {
                 if (event.getDeltaY() > 0) {
@@ -108,14 +100,14 @@ public class GUI {
     private HBox createBottomBar() {
         HBox box = new HBox(60);
         box.setPadding(new Insets(5, 0, 0, 10));
-        box.setPrefWidth(defaultWidth);
+        box.setPrefWidth(width);
         box.getChildren().addAll(rowLabel, columnLabel, countLabel, fontSizeLabel, breakLabel);
         return box;
     }
 
     private TextArea createTextArea() {
         TextArea area = new TextArea();
-        area.setPrefWidth(defaultWidth);
+        area.setPrefWidth(width);
         area.setPadding(new Insets(0, 10, 5, 0));
         area.setStyle(
             "-fx-focus-color: -fx-control-inner-background; -fx-faint-focus-color: -fx-control-inner-background;"
@@ -242,17 +234,11 @@ public class GUI {
         });
         view.getItems().addAll(zoom, unzoom, toggleBreak, toggleNoBreak);
 
-
-        Menu settings = new Menu("Settings");
-        MenuItem openSettings = new MenuItem("Open Settings");
-        openSettings.setOnAction(event -> showSettingsWindow());
-        settings.getItems().add(openSettings);
-
-        parent.getMenus().addAll(file, edit, view, settings);
+        parent.getMenus().addAll(file, edit, view);
 
         VBox box = new VBox(20);
         box.setPadding(new Insets(0, 5, 5, 0));
-        box.setPrefWidth(defaultWidth);
+        box.setPrefWidth(width);
         box.getChildren().add(parent);
         return box;
     }
@@ -418,31 +404,4 @@ public class GUI {
             }
         }
     }
-
-    
-    private void showSettingsWindow() {
-        Stage settingsStage = new Stage();
-        settingsStage.setMinWidth(settingsDefaultWidth);
-        settingsStage.setMinHeight(settingsDefaultHeight);
-
-        VBox root = new VBox(20);
-        root.setPadding(new Insets(10));
-
-        Label lightModeLabel = new Label("Light mode");
-        Label darkModeLabel = new Label("Dark mode");
-        Label defaultWidthLabel = new Label("Default width: " + defaultWidth);
-        Label defaultHeightLabel = new Label("Default height: " + defaultHeight);
-        Label defaultFontSizeLabel = new Label("Default font size: " + defaultFontSize);
-
-        root.getChildren().addAll(
-            lightModeLabel, darkModeLabel, defaultWidthLabel, defaultHeightLabel, defaultFontSizeLabel
-        );
-        
-        
-        Scene scene = new Scene(root);
-        settingsStage.setTitle("Settings");
-        settingsStage.setScene(scene);
-        settingsStage.show();
-    }
-
 }
