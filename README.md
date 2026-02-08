@@ -4,7 +4,7 @@ Supports: Saving, Loading, Zooming, Shortcuts
 
 <img width="801" height="636" alt="image" src="https://github.com/user-attachments/assets/322406fd-6d1c-4382-b319-33a9ee4c7f25" />
 
-<img width="801" height="636" alt="image" src="https://github.com/user-attachments/assets/2121208d-f164-4a0a-8169-19eb06f91e6b" />
+<img width="800" height="641" alt="image" src="https://github.com/user-attachments/assets/2473bde6-d425-4c40-8e21-2e4f73f5a73e" />
 
 <img width="801" height="636" alt="image" src="https://github.com/user-attachments/assets/24c1ffeb-51da-49ef-8b4e-89c840049d47" />
 
